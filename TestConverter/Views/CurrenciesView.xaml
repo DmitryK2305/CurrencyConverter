@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="TestConverter.Views.CurrenciesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:view="clr-namespace:TestConverter.Views"             
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" FontSize="16" FontWeight="DemiBold">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>        
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Обновить" Command="{Binding UpdateCurrenciesCommand}" Style="{StaticResource ButtonStyle}"/>
+            <TextBlock Text="Данные от " VerticalAlignment="Center" Margin="20 0 0 0"/>
+            <TextBlock Text="{Binding UpdateTime, StringFormat='dd.MM.yyyy'}" VerticalAlignment="Center"/>      
+        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Курсы валют">
+                <ScrollViewer>
+                    <ItemsControl ItemsSource="{Binding Currencies.Values}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Nominal}" Width="50" Margin="20 0 0 0"/>                                    
+                                    <TextBlock Text="{Binding CharCode}" Width="50"/>
+                                    <TextBlock Text=" = "/>
+                                    <TextBlock Text="{Binding Value}" Width="100"/>
+                                    <TextBlock Text="RUB"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>                
+            </TabItem>
+            <TabItem Header="Конвертер валют">
+                <view:ConverterView x:Name="ConverterView" />
+            </TabItem>
+            <TabItem Header="Поиск по коду">
+                <view:CodesView x:Name="CodesView" />
+            </TabItem>            
+        </TabControl>
+               
+    </Grid>
+</UserControl>

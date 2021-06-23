@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="TestConverter.Views.ConverterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestConverter.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="View">
+    <ScrollViewer Grid.Row="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button                      
+                    Grid.Row="1" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center"
+                    Command="{Binding AddConverterCommand}" Style="{StaticResource ButtonStyle}">
+                Добавить валюту
+            </Button>
+            <ItemsControl x:Name="PointsPanel" ItemsSource="{Binding MultiConverter.Converters}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="CurrencyCB" Grid.Column="0" ItemsSource="{Binding ElementName=View, Path=DataContext.CurrenciesViewModel.Currencies.Values}" SelectedItem="{Binding Currency}" Margin="3">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBox Grid.Column="1" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, StringFormat='0.####'}" Margin="3" VerticalContentAlignment="Center"/>
+                            <Button Grid.Column="2" Style="{StaticResource ButtonDeleteStyle}" Command="{Binding ElementName=View, Path=DataContext.DeleteConverterCommand}" CommandParameter="{Binding }" VerticalAlignment="Center" Width="30" Height="30" Padding="0">
+                                X
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
